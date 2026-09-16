@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CaptainFact</title>
+    <meta
+      name="description"
+      content="CaptainFact — collaborative fact-checking. This page will summarize the project."
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        var lang = 'fr'
+        try {
+          var stored = localStorage.getItem('cf-lang')
+          if (stored === 'fr' || stored === 'en') {
+            lang = stored
+          } else {
+            var nav = (navigator.language || navigator.userLanguage || '').toLowerCase()
+            lang = nav.indexOf('fr') === 0 ? 'fr' : 'en'
+          }
+        } catch (e) {
+          var fallback = (navigator.language || '').toLowerCase()
+          lang = fallback.indexOf('fr') === 0 ? 'fr' : 'en'
+        }
+        document.documentElement.lang = lang
+        document.documentElement.setAttribute('data-lang', lang)
+      })()
+    </script>
+    <style>
+      @font-face {
+        font-family: 'Playfair Display';
+        src: url('assets/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      :root {
+        --background: #ffffff;
+        --foreground: hsl(222.2, 47.4%, 11.2%);
+        --muted: hsl(215.4, 16.3%, 46.9%);
+        --primary: hsl(184, 25%, 45%);
+        --primary-foreground: hsl(210, 40%, 98%);
+        --link: hsl(184, 25%, 39%);
+        --link-hover: hsl(184, 25%, 55%);
+        --border: hsl(214.3, 31.8%, 91.4%);
+        --radius: 0.5rem;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        background: var(--background);
+        color: var(--foreground);
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        font-size: 1.0625rem;
+        line-height: 1.7;
+      }
+
+      .page {
+        max-width: 40rem;
+        margin: 0 auto;
+        padding: 3.5rem 1.5rem 5rem;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 3.5rem;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        font-family: 'Playfair Display', Georgia, serif;
+        font-weight: 500;
+        font-size: 1.35rem;
+        letter-spacing: 0.02em;
+        color: var(--foreground);
+        line-height: 1;
+      }
+
+      .logo img {
+        width: 48px;
+        height: 48px;
+        display: block;
+      }
+
+      .logo .aptain {
+        margin-left: 1px;
+      }
+
+      .logo .fact {
+        font-weight: 700;
+      }
+
+      .lang {
+        display: inline-flex;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .lang button {
+        appearance: none;
+        background: transparent;
+        border: 0;
+        padding: 0.4rem 0.8rem;
+        font-family: inherit;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      .lang button + button {
+        border-left: 1px solid var(--border);
+      }
+
+      .lang button[aria-pressed='true'] {
+        background: var(--primary);
+        color: var(--primary-foreground);
+      }
+
+      .lang button:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      article h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.75rem;
+        font-weight: 500;
+        line-height: 1.3;
+        margin-bottom: 1.35rem;
+      }
+
+      article p {
+        margin-bottom: 1.15rem;
+      }
+
+      article a {
+        color: var(--link);
+      }
+
+      article a:hover {
+        color: var(--link-hover);
+      }
+
+      [data-lang='fr'] .content-en,
+      [data-lang='en'] .content-fr {
+        display: none;
+      }
+
+      @media (max-width: 480px) {
+        .page {
+          padding: 2rem 1.25rem 4rem;
+        }
+
+        .header {
+          margin-bottom: 2.5rem;
+        }
+
+        .logo {
+          font-size: 1.15rem;
+        }
+
+        .logo img {
+          width: 40px;
+          height: 40px;
+        }
+
+        article h1 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div class="logo">
+          <img src="assets/logo.svg" alt="C" width="48" height="48" />
+          <span class="aptain">aptain</span><span class="fact">Fact</span>
+        </div>
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" data-set-lang="fr" aria-pressed="true">FR</button>
+          <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+        </div>
+      </header>
+
+      <main>
+        <article class="content-fr">
+          <h1>Lorem ipsum dolor sit amet</h1>
+          <p>
+            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+            officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
+            sit aspernatur aut odit aut fugit.
+          </p>
+          <p>
+            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+            velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam
+            aliquam quaerat voluptatem.
+          </p>
+        </article>
+
+        <article class="content-en">
+          <h1>Lorem ipsum dolor sit amet</h1>
+          <p>
+            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+            egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.
+            Donec eu libero sit amet quam egestas semper.
+          </p>
+          <p>
+            Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et
+            sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae,
+            ornare sit amet, wisi.
+          </p>
+          <p>
+            Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis
+            tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis.
+            Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate
+            magna eros eu erat.
+          </p>
+          <p>
+            Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis
+            luctus, metus. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer
+            ligula vulputate sem tristique cursus.
+          </p>
+        </article>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        var STORAGE_KEY = 'cf-lang'
+
+        function currentLang() {
+          return document.documentElement.getAttribute('data-lang') === 'en' ? 'en' : 'fr'
+        }
+
+        function applyLang(lang) {
+          document.documentElement.lang = lang
+          document.documentElement.setAttribute('data-lang', lang)
+          var buttons = document.querySelectorAll('[data-set-lang]')
+          for (var i = 0; i < buttons.length; i++) {
+            var isActive = buttons[i].getAttribute('data-set-lang') === lang
+            buttons[i].setAttribute('aria-pressed', isActive ? 'true' : 'false')
+          }
+          var fr = document.querySelector('.content-fr')
+          var en = document.querySelector('.content-en')
+          if (fr) fr.hidden = lang !== 'fr'
+          if (en) en.hidden = lang !== 'en'
+        }
+
+        applyLang(currentLang())
+
+        var buttons = document.querySelectorAll('[data-set-lang]')
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].addEventListener('click', function (event) {
+            var lang = event.currentTarget.getAttribute('data-set-lang')
+            applyLang(lang)
+            try {
+              localStorage.setItem(STORAGE_KEY, lang)
+            } catch (e) {}
+          })
+        }
+      })()
+    </script>
+  </body>
+</html>
