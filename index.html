@@ -119,6 +119,10 @@
           background: transparent;
           box-shadow: none;
         }
+
+        .page-footer {
+          display: none;
+        }
       }
 
       .header {
@@ -209,6 +213,20 @@
         color: var(--link-hover);
       }
 
+      .page-footer {
+        margin-top: 3.25rem;
+        padding-top: 1.35rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+
+      .page-footer p {
+        margin: 0;
+        font-style: italic;
+      }
+
       [data-lang="fr"] .content-en,
       [data-lang="en"] .content-fr {
         display: none;
@@ -234,6 +252,10 @@
 
         article h1 {
           font-size: 1.5rem;
+        }
+
+        .page-footer {
+          margin-top: 2.5rem;
         }
       }
     </style>
@@ -313,6 +335,21 @@
           </p>
         </article>
       </main>
+
+      <footer class="page-footer">
+        <p class="content-fr">
+          Les photos en arrière-plan sont celles des personnes qui ont contribué
+          au fact-checking collaboratif sur CaptainFact. Cette animation rend
+          hommage à leur travail et à leur engagement pour rendre Internet un
+          peu mieux informé.
+        </p>
+        <p class="content-en">
+          The photos in the background are those of the people who contributed
+          to collaborative fact-checking on CaptainFact. This animation pays
+          tribute to their work and their commitment to making the internet a
+          somehow better informed.
+        </p>
+      </footer>
     </div>
 
     <script>
@@ -336,10 +373,11 @@
               isActive ? "true" : "false",
             );
           }
-          var fr = document.querySelector(".content-fr");
-          var en = document.querySelector(".content-en");
-          if (fr) fr.hidden = lang !== "fr";
-          if (en) en.hidden = lang !== "en";
+          var fr = document.querySelectorAll(".content-fr");
+          var en = document.querySelectorAll(".content-en");
+          var j;
+          for (j = 0; j < fr.length; j++) fr[j].hidden = lang !== "fr";
+          for (j = 0; j < en.length; j++) en[j].hidden = lang !== "en";
         }
 
         applyLang(currentLang());
