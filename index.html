@@ -360,6 +360,8 @@
         var SWITCH_MAX = 1500;
         var FADE_MS = 640;
         var BASE_ALPHA = 0.1;
+        var SCALE_MIN = 0.8;
+        var SCALE_MAX = 1.2;
         var CYCLE_MIN = 8000;
         var CYCLE_MAX = 12000;
         var MAX_LOADED = 2;
@@ -450,7 +452,7 @@
           col.fade = 0;
         }
 
-        function drawThumb(img, cell, x, y, alpha) {
+        function drawThumb(img, cell, x, y, size, alpha) {
           if (alpha <= 0.002) return;
           rainCtx.globalAlpha = alpha;
           rainCtx.drawImage(
@@ -461,13 +463,17 @@
             cellSize,
             x,
             y,
-            fontSize,
-            fontSize,
+            size,
+            size,
           );
         }
 
         function randomSpeed() {
           return 0.16 + Math.random() * 0.22;
+        }
+
+        function randomScale() {
+          return SCALE_MIN + Math.random() * (SCALE_MAX - SCALE_MIN);
         }
 
         function dropSlot(slot) {
@@ -559,6 +565,7 @@
                 ? prior.y
                 : Math.random() * (height + fontSize * 12) - fontSize * 4,
               speed: prior ? prior.speed : randomSpeed(),
+              scale: prior ? prior.scale : randomScale(),
               active: prior ? prior.active : Math.random() > 0.42,
               atlas: prior ? prior.atlas : -1,
               cell: prior ? prior.cell : 0,
@@ -607,7 +614,8 @@
               scheduleSwitch(col, now);
             }
 
-            var x = i * fontSize;
+            var size = fontSize * col.scale;
+            var x = i * fontSize + (fontSize - size) / 2;
             var slot = slotFor(col.atlas);
             if (!slot) {
               assignCell(col);
@@ -626,17 +634,20 @@
                   col.prevCell,
                   x,
                   col.y,
+                  size,
                   BASE_ALPHA * (1 - t),
                 );
-              if (slot) drawThumb(slot.img, col.cell, x, col.y, BASE_ALPHA * t);
+              if (slot)
+                drawThumb(slot.img, col.cell, x, col.y, size, BASE_ALPHA * t);
             } else if (slot) {
-              drawThumb(slot.img, col.cell, x, col.y, BASE_ALPHA);
+              drawThumb(slot.img, col.cell, x, col.y, size, BASE_ALPHA);
             }
 
             col.y += fontSize * col.speed * fall;
             if (col.y > height + fontSize * 6) {
               col.y = -fontSize * (1 + Math.random() * 8);
               col.speed = randomSpeed();
+              col.scale = randomScale();
               col.fade = -1;
               col.prevAtlas = -1;
               if (Math.random() > 0.82) {
@@ -657,6 +668,7 @@
               columns[idx].active = true;
               columns[idx].y = -fontSize * (1 + Math.random() * 6);
               columns[idx].speed = randomSpeed();
+              columns[idx].scale = randomScale();
               columns[idx].fade = -1;
               columns[idx].prevAtlas = -1;
               assignCell(columns[idx]);
