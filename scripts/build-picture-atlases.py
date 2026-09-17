@@ -5,6 +5,9 @@ Variants:
   std  24px mini thumbs → assets/picture-atlases/
   hq   96px thumbs      → assets/picture-atlases-hq/
 
+Output is lossy WebP (q=80, lossless alpha) so photographic sheets stay
+small without a visible change in the matrix rain.
+
 Usage:
   python3 scripts/build-picture-atlases.py
   python3 scripts/build-picture-atlases.py hq
@@ -141,15 +144,24 @@ def build(variant: str) -> None:
     for i in range(0, len(files), per_atlas):
         chunk = files[i : i + per_atlas]
         idx = i // per_atlas
-        name = f"atlas-{idx:02d}.png"
+        name = f"atlas-{idx:02d}.webp"
         dest = out / name
         rows = math.ceil(len(chunk) / grid)
-        sheet = Image.new("RGBA", (grid * cell, rows * cell), (255, 255, 255, 0))
+        # Transparent black avoids a light halo when WebP smears RGB into
+        # the anti-aliased circle edge.
+        sheet = Image.new("RGBA", (grid * cell, rows * cell), (0, 0, 0, 0))
         for n, path in enumerate(chunk):
             x = (n % grid) * cell
             y = (n // grid) * cell
             sheet.paste(circle_thumb(path, mask, cell), (x, y))
-        sheet.save(dest, "PNG", optimize=True)
+        sheet.save(
+            dest,
+            "WEBP",
+            quality=80,
+            method=6,
+            alpha_quality=100,
+            exact=True,
+        )
         atlases.append({"src": name, "count": len(chunk)})
         print(f"Wrote {name} ({len(chunk)} cells)")
 

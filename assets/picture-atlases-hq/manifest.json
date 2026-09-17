@@ -3,27 +3,27 @@
   "grid": 16,
   "atlases": [
     {
-      "src": "atlas-00.png",
+      "src": "atlas-00.webp",
       "count": 256
     },
     {
-      "src": "atlas-01.png",
+      "src": "atlas-01.webp",
       "count": 256
     },
     {
-      "src": "atlas-02.png",
+      "src": "atlas-02.webp",
       "count": 256
     },
     {
-      "src": "atlas-03.png",
+      "src": "atlas-03.webp",
       "count": 256
     },
     {
-      "src": "atlas-04.png",
+      "src": "atlas-04.webp",
       "count": 256
     },
     {
-      "src": "atlas-05.png",
+      "src": "atlas-05.webp",
       "count": 43
     }
   ]

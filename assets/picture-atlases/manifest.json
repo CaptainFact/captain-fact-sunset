@@ -3,11 +3,11 @@
   "grid": 32,
   "atlases": [
     {
-      "src": "atlas-00.png",
+      "src": "atlas-00.webp",
       "count": 1024
     },
     {
-      "src": "atlas-01.png",
+      "src": "atlas-01.webp",
       "count": 306
     }
   ]
