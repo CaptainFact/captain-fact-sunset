@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr" data-lang="fr">
   <head>
     <meta charset="utf-8" />
@@ -12,27 +12,32 @@
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
     <script>
       (function () {
-        var lang = 'fr'
+        var lang = "fr";
         try {
-          var stored = localStorage.getItem('cf-lang')
-          if (stored === 'fr' || stored === 'en') {
-            lang = stored
+          var stored = localStorage.getItem("cf-lang");
+          if (stored === "fr" || stored === "en") {
+            lang = stored;
           } else {
-            var nav = (navigator.language || navigator.userLanguage || '').toLowerCase()
-            lang = nav.indexOf('fr') === 0 ? 'fr' : 'en'
+            var nav = (
+              navigator.language ||
+              navigator.userLanguage ||
+              ""
+            ).toLowerCase();
+            lang = nav.indexOf("fr") === 0 ? "fr" : "en";
           }
         } catch (e) {
-          var fallback = (navigator.language || '').toLowerCase()
-          lang = fallback.indexOf('fr') === 0 ? 'fr' : 'en'
+          var fallback = (navigator.language || "").toLowerCase();
+          lang = fallback.indexOf("fr") === 0 ? "fr" : "en";
         }
-        document.documentElement.lang = lang
-        document.documentElement.setAttribute('data-lang', lang)
-      })()
+        document.documentElement.lang = lang;
+        document.documentElement.setAttribute("data-lang", lang);
+      })();
     </script>
     <style>
       @font-face {
-        font-family: 'Playfair Display';
-        src: url('assets/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
+        font-family: "Playfair Display";
+        src: url("assets/PlayfairDisplay-VariableFont_wght.ttf")
+          format("truetype");
         font-weight: 100 900;
         font-display: swap;
       }
@@ -63,7 +68,11 @@
 
       body {
         min-height: 100vh;
-        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
         font-size: 1.0625rem;
         line-height: 1.7;
       }
@@ -110,7 +119,7 @@
       .logo {
         display: flex;
         align-items: center;
-        font-family: 'Playfair Display', Georgia, serif;
+        font-family: "Playfair Display", Georgia, serif;
         font-weight: 500;
         font-size: 1.35rem;
         letter-spacing: 0.02em;
@@ -157,7 +166,7 @@
         border-left: 1px solid var(--border);
       }
 
-      .lang button[aria-pressed='true'] {
+      .lang button[aria-pressed="true"] {
         background: var(--primary);
         color: var(--primary-foreground);
       }
@@ -168,7 +177,7 @@
       }
 
       article h1 {
-        font-family: 'Playfair Display', Georgia, serif;
+        font-family: "Playfair Display", Georgia, serif;
         font-size: 1.75rem;
         font-weight: 500;
         line-height: 1.3;
@@ -187,8 +196,8 @@
         color: var(--link-hover);
       }
 
-      [data-lang='fr'] .content-en,
-      [data-lang='en'] .content-fr {
+      [data-lang="fr"] .content-en,
+      [data-lang="en"] .content-fr {
         display: none;
       }
 
@@ -225,8 +234,12 @@
           <span class="aptain">aptain</span><span class="fact">Fact</span>
         </div>
         <div class="lang" role="group" aria-label="Language">
-          <button type="button" data-set-lang="fr" aria-pressed="true">FR</button>
-          <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+          <button type="button" data-set-lang="fr" aria-pressed="true">
+            FR
+          </button>
+          <button type="button" data-set-lang="en" aria-pressed="false">
+            EN
+          </button>
         </div>
       </header>
 
@@ -234,50 +247,56 @@
         <article class="content-fr">
           <h1>Lorem ipsum dolor sit amet</h1>
           <p>
-            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat.
           </p>
           <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-            officia deserunt mollit anim id est laborum.
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
           </p>
           <p>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-            sit aspernatur aut odit aut fugit.
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+            quae ab illo inventore veritatis et quasi architecto beatae vitae
+            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+            aspernatur aut odit aut fugit.
           </p>
           <p>
-            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-            velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam
-            aliquam quaerat voluptatem.
+            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
+            consectetur, adipisci velit, sed quia non numquam eius modi tempora
+            incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
           </p>
         </article>
 
         <article class="content-en">
           <h1>Lorem ipsum dolor sit amet</h1>
           <p>
-            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-            egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.
-            Donec eu libero sit amet quam egestas semper.
+            Pellentesque habitant morbi tristique senectus et netus et malesuada
+            fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
+            ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
+            egestas semper.
           </p>
           <p>
-            Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et
-            sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae,
-            ornare sit amet, wisi.
+            Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque
+            sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi,
+            condimentum sed, commodo vitae, ornare sit amet, wisi.
           </p>
           <p>
-            Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis
-            tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis.
-            Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate
-            magna eros eu erat.
+            Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum
+            orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis
+            pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus
+            faucibus, tortor neque egestas augue, eu vulputate magna eros eu
+            erat.
           </p>
           <p>
-            Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis
-            luctus, metus. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer
-            ligula vulputate sem tristique cursus.
+            Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan
+            porttitor, facilisis luctus, metus. Phasellus ultrices nulla quis
+            nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem
+            tristique cursus.
           </p>
         </article>
       </main>
@@ -285,181 +304,437 @@
 
     <script>
       (function () {
-        var STORAGE_KEY = 'cf-lang'
+        var STORAGE_KEY = "cf-lang";
 
         function currentLang() {
-          return document.documentElement.getAttribute('data-lang') === 'en' ? 'en' : 'fr'
+          return document.documentElement.getAttribute("data-lang") === "en"
+            ? "en"
+            : "fr";
         }
 
         function applyLang(lang) {
-          document.documentElement.lang = lang
-          document.documentElement.setAttribute('data-lang', lang)
-          var buttons = document.querySelectorAll('[data-set-lang]')
+          document.documentElement.lang = lang;
+          document.documentElement.setAttribute("data-lang", lang);
+          var buttons = document.querySelectorAll("[data-set-lang]");
           for (var i = 0; i < buttons.length; i++) {
-            var isActive = buttons[i].getAttribute('data-set-lang') === lang
-            buttons[i].setAttribute('aria-pressed', isActive ? 'true' : 'false')
+            var isActive = buttons[i].getAttribute("data-set-lang") === lang;
+            buttons[i].setAttribute(
+              "aria-pressed",
+              isActive ? "true" : "false",
+            );
           }
-          var fr = document.querySelector('.content-fr')
-          var en = document.querySelector('.content-en')
-          if (fr) fr.hidden = lang !== 'fr'
-          if (en) en.hidden = lang !== 'en'
+          var fr = document.querySelector(".content-fr");
+          var en = document.querySelector(".content-en");
+          if (fr) fr.hidden = lang !== "fr";
+          if (en) en.hidden = lang !== "en";
         }
 
-        applyLang(currentLang())
+        applyLang(currentLang());
 
-        var buttons = document.querySelectorAll('[data-set-lang]')
+        var buttons = document.querySelectorAll("[data-set-lang]");
         for (var i = 0; i < buttons.length; i++) {
-          buttons[i].addEventListener('click', function (event) {
-            var lang = event.currentTarget.getAttribute('data-set-lang')
-            applyLang(lang)
+          buttons[i].addEventListener("click", function (event) {
+            var lang = event.currentTarget.getAttribute("data-set-lang");
+            applyLang(lang);
             try {
-              localStorage.setItem(STORAGE_KEY, lang)
+              localStorage.setItem(STORAGE_KEY, lang);
             } catch (e) {}
-          })
+          });
         }
-      })()
+      })();
     </script>
     <script>
       (function () {
-        var rainCanvas = document.getElementById('matrix')
-        if (!rainCanvas) return
+        var rainCanvas = document.getElementById("matrix");
+        if (!rainCanvas) return;
 
-        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-        var rainCtx = rainCanvas.getContext('2d')
-        if (!rainCtx) return
+        var reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        );
+        var rainCtx = rainCanvas.getContext("2d");
+        if (!rainCtx) return;
 
-        var CHARSET =
-          'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789'
-        var TICK_MS = 52
-        var dpr = 1
-        var width = 0
-        var height = 0
-        var fontSize = 17
-        var columns = []
-        var raf = 0
-        var lastTick = 0
-        var running = false
+        var ATLAS_BASE = "assets/picture-atlases/";
+        var TICK_MS = 88;
+        var SWITCH_MIN = 1000;
+        var SWITCH_MAX = 1500;
+        var FADE_MS = 640;
+        var BASE_ALPHA = 0.1;
+        var CYCLE_MIN = 8000;
+        var CYCLE_MAX = 12000;
+        var MAX_LOADED = 2;
+        var dpr = 1;
+        var width = 0;
+        var height = 0;
+        var fontSize = 17;
+        var columns = [];
+        var raf = 0;
+        var lastTick = 0;
+        var lastFrame = 0;
+        var running = false;
+        var booting = false;
+        var prefetching = false;
+        var manifest = null;
+        var cellSize = 24;
+        var grid = 32;
+        var loaded = [];
+        var bag = [];
+        var nextCycleAt = 0;
 
-        function randomChar() {
-          return CHARSET.charAt((Math.random() * CHARSET.length) | 0)
+        function refillBag() {
+          var i;
+          var j;
+          var tmp;
+          bag = [];
+          for (i = 0; i < manifest.atlases.length; i++) bag.push(i);
+          for (i = bag.length - 1; i > 0; i--) {
+            j = (Math.random() * (i + 1)) | 0;
+            tmp = bag[i];
+            bag[i] = bag[j];
+            bag[j] = tmp;
+          }
+        }
+
+        function isLoaded(index) {
+          var i;
+          for (i = 0; i < loaded.length; i++) {
+            if (loaded[i].index === index) return true;
+          }
+          return false;
+        }
+
+        function slotFor(index) {
+          var i;
+          for (i = 0; i < loaded.length; i++) {
+            if (loaded[i].index === index) return loaded[i];
+          }
+          return null;
+        }
+
+        function takeNextUnloaded() {
+          var i;
+          var pass;
+          for (pass = 0; pass < 2; pass++) {
+            if (!bag.length) refillBag();
+            for (i = 0; i < bag.length; i++) {
+              if (!isLoaded(bag[i])) return bag.splice(i, 1)[0];
+            }
+            bag = [];
+          }
+          return -1;
+        }
+
+        function assignCell(col) {
+          if (!loaded.length) {
+            col.atlas = -1;
+            col.cell = 0;
+            return;
+          }
+          var slot = loaded[(Math.random() * loaded.length) | 0];
+          col.atlas = slot.index;
+          col.cell = (Math.random() * slot.count) | 0;
+        }
+
+        function scheduleSwitch(col, now) {
+          col.switchAt =
+            now + SWITCH_MIN + Math.random() * (SWITCH_MAX - SWITCH_MIN);
+        }
+
+        function beginSwitch(col) {
+          var prevAtlas = col.atlas;
+          var prevCell = col.cell;
+          assignCell(col);
+          if (col.atlas === prevAtlas && col.cell === prevCell) assignCell(col);
+          col.prevAtlas = prevAtlas;
+          col.prevCell = prevCell;
+          col.fade = 0;
+        }
+
+        function drawThumb(img, cell, x, y, alpha) {
+          if (alpha <= 0.002) return;
+          rainCtx.globalAlpha = alpha;
+          rainCtx.drawImage(
+            img,
+            (cell % grid) * cellSize,
+            ((cell / grid) | 0) * cellSize,
+            cellSize,
+            cellSize,
+            x,
+            y,
+            fontSize,
+            fontSize,
+          );
+        }
+
+        function randomSpeed() {
+          return 0.16 + Math.random() * 0.22;
+        }
+
+        function dropSlot(slot) {
+          if (!slot || !slot.img) return;
+          slot.img.onload = null;
+          slot.img.onerror = null;
+          try {
+            slot.img.removeAttribute("src");
+          } catch (e) {}
+        }
+
+        function loadAtlas(index) {
+          var meta = manifest.atlases[index];
+          return new Promise(function (resolve, reject) {
+            var img = new Image();
+            img.onload = function () {
+              img.onload = null;
+              img.onerror = null;
+              var done = function () {
+                resolve({ index: index, img: img, count: meta.count });
+              };
+              if (img.decode) {
+                img.decode().then(done).catch(done);
+              } else {
+                done();
+              }
+            };
+            img.onerror = function () {
+              img.onload = null;
+              img.onerror = null;
+              reject(new Error("atlas load failed"));
+            };
+            img.src = ATLAS_BASE + meta.src;
+          });
+        }
+
+        function maybeCycle(now) {
+          if (prefetching || !manifest) return;
+          if (manifest.atlases.length <= MAX_LOADED) return;
+          if (now < nextCycleAt) return;
+          var next = takeNextUnloaded();
+          if (next < 0) return;
+          prefetching = true;
+          nextCycleAt =
+            now + CYCLE_MIN + Math.random() * (CYCLE_MAX - CYCLE_MIN);
+          loadAtlas(next)
+            .then(function (slot) {
+              loaded.push(slot);
+              while (loaded.length > MAX_LOADED) dropSlot(loaded.shift());
+              prefetching = false;
+            })
+            .catch(function () {
+              prefetching = false;
+            });
         }
 
         function stop() {
-          running = false
+          running = false;
           if (raf) {
-            cancelAnimationFrame(raf)
-            raf = 0
+            cancelAnimationFrame(raf);
+            raf = 0;
           }
-          rainCtx.setTransform(1, 0, 0, 1, 0, 0)
-          rainCtx.clearRect(0, 0, rainCanvas.width, rainCanvas.height)
+          rainCtx.setTransform(1, 0, 0, 1, 0, 0);
+          rainCtx.clearRect(0, 0, rainCanvas.width, rainCanvas.height);
         }
 
         function resize() {
-          dpr = Math.min(window.devicePixelRatio || 1, 2)
-          width = window.innerWidth
-          height = window.innerHeight
-          fontSize = width < 480 ? 15 : 17
+          dpr = Math.min(window.devicePixelRatio || 1, 2);
+          width = window.innerWidth;
+          height = window.innerHeight;
+          fontSize = width < 480 ? 15 : 17;
 
-          rainCanvas.width = Math.floor(width * dpr)
-          rainCanvas.height = Math.floor(height * dpr)
-          rainCanvas.style.width = width + 'px'
-          rainCanvas.style.height = height + 'px'
+          rainCanvas.width = Math.floor(width * dpr);
+          rainCanvas.height = Math.floor(height * dpr);
+          rainCanvas.style.width = width + "px";
+          rainCanvas.style.height = height + "px";
 
-          rainCtx.setTransform(dpr, 0, 0, dpr, 0, 0)
-          rainCtx.fillStyle = '#ffffff'
-          rainCtx.fillRect(0, 0, width, height)
+          rainCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          rainCtx.fillStyle = "#ffffff";
+          rainCtx.fillRect(0, 0, width, height);
 
-          var count = Math.max(1, Math.ceil(width / fontSize))
-          var prev = columns
-          columns = []
+          var count = Math.max(1, Math.ceil(width / fontSize));
+          var prev = columns;
+          columns = [];
           for (var i = 0; i < count; i++) {
-            var prior = prev[i]
-            columns.push({
-              y: prior ? prior.y : Math.random() * (height + fontSize * 12) - fontSize * 4,
-              speed: prior ? prior.speed : 0.45 + Math.random() * 0.55,
+            var prior = prev[i];
+            var col = {
+              y: prior
+                ? prior.y
+                : Math.random() * (height + fontSize * 12) - fontSize * 4,
+              speed: prior ? prior.speed : randomSpeed(),
               active: prior ? prior.active : Math.random() > 0.42,
-              glyph: prior ? prior.glyph : randomChar(),
-            })
+              atlas: prior ? prior.atlas : -1,
+              cell: prior ? prior.cell : 0,
+              prevAtlas: prior ? prior.prevAtlas : -1,
+              prevCell: prior ? prior.prevCell : 0,
+              fade: prior ? prior.fade : -1,
+              switchAt: prior ? prior.switchAt : 0,
+            };
+            if (col.atlas < 0 || !slotFor(col.atlas)) assignCell(col);
+            columns.push(col);
           }
         }
 
         function draw(now) {
-          if (!running) return
-          raf = requestAnimationFrame(draw)
+          if (!running) return;
+          raf = requestAnimationFrame(draw);
 
-          rainCtx.fillStyle = 'rgba(255, 255, 255, 0.11)'
-          rainCtx.fillRect(0, 0, width, height)
+          rainCtx.fillStyle = "rgba(255, 255, 255, 0.11)";
+          rainCtx.fillRect(0, 0, width, height);
 
-          rainCtx.font = fontSize + 'px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace'
-          rainCtx.textBaseline = 'top'
-          rainCtx.fillStyle = 'hsla(184, 25%, 45%, 0.1)'
+          var dt = lastFrame ? now - lastFrame : 16;
+          lastFrame = now;
+          if (dt > 80) dt = 80;
 
-          var shouldAdvance = now - lastTick >= TICK_MS
-          if (shouldAdvance) lastTick = now
+          var shouldAdvance = now - lastTick >= TICK_MS;
+          if (shouldAdvance) lastTick = now;
+
+          var fall = dt / TICK_MS;
+
+          rainCtx.imageSmoothingEnabled = true;
 
           for (var i = 0; i < columns.length; i++) {
-            var col = columns[i]
-            if (!col.active) continue
+            var col = columns[i];
+            if (!col.active) continue;
 
-            rainCtx.fillText(col.glyph, i * fontSize, col.y)
+            if (!col.switchAt) col.switchAt = now + Math.random() * SWITCH_MAX;
 
-            if (shouldAdvance) {
-              col.y += fontSize * col.speed
-              if (Math.random() > 0.62) col.glyph = randomChar()
-              if (col.y > height + fontSize * 6) {
-                col.y = -fontSize * (1 + Math.random() * 8)
-                col.speed = 0.45 + Math.random() * 0.55
-                if (Math.random() > 0.82) col.active = false
+            if (col.fade >= 0) {
+              col.fade += dt / FADE_MS;
+              if (col.fade >= 1) {
+                col.fade = -1;
+                col.prevAtlas = -1;
+              }
+            } else if (now >= col.switchAt) {
+              beginSwitch(col);
+              scheduleSwitch(col, now);
+            }
+
+            var x = i * fontSize;
+            var slot = slotFor(col.atlas);
+            if (!slot) {
+              assignCell(col);
+              col.fade = -1;
+              col.prevAtlas = -1;
+              slot = slotFor(col.atlas);
+            }
+
+            if (col.fade >= 0) {
+              var t = col.fade > 1 ? 1 : col.fade;
+              t = t * t * (3 - 2 * t);
+              var prevSlot = slotFor(col.prevAtlas);
+              if (prevSlot)
+                drawThumb(
+                  prevSlot.img,
+                  col.prevCell,
+                  x,
+                  col.y,
+                  BASE_ALPHA * (1 - t),
+                );
+              if (slot) drawThumb(slot.img, col.cell, x, col.y, BASE_ALPHA * t);
+            } else if (slot) {
+              drawThumb(slot.img, col.cell, x, col.y, BASE_ALPHA);
+            }
+
+            col.y += fontSize * col.speed * fall;
+            if (col.y > height + fontSize * 6) {
+              col.y = -fontSize * (1 + Math.random() * 8);
+              col.speed = randomSpeed();
+              col.fade = -1;
+              col.prevAtlas = -1;
+              if (Math.random() > 0.82) {
+                col.active = false;
+                col.switchAt = 0;
+              } else {
+                assignCell(col);
+                scheduleSwitch(col, now);
               }
             }
           }
 
+          rainCtx.globalAlpha = 1;
+
           if (shouldAdvance && Math.random() > 0.88) {
-            var idx = (Math.random() * columns.length) | 0
+            var idx = (Math.random() * columns.length) | 0;
             if (!columns[idx].active) {
-              columns[idx].active = true
-              columns[idx].y = -fontSize * (1 + Math.random() * 6)
-              columns[idx].speed = 0.45 + Math.random() * 0.55
-              columns[idx].glyph = randomChar()
+              columns[idx].active = true;
+              columns[idx].y = -fontSize * (1 + Math.random() * 6);
+              columns[idx].speed = randomSpeed();
+              columns[idx].fade = -1;
+              columns[idx].prevAtlas = -1;
+              assignCell(columns[idx]);
+              scheduleSwitch(columns[idx], now);
             }
           }
+
+          if (shouldAdvance) maybeCycle(now);
         }
 
         function start() {
-          if (running || reduceMotion.matches) return
-          running = true
-          resize()
-          lastTick = 0
-          raf = requestAnimationFrame(draw)
+          if (running || reduceMotion.matches || !loaded.length) return;
+          running = true;
+          resize();
+          lastTick = 0;
+          lastFrame = 0;
+          raf = requestAnimationFrame(draw);
+        }
+
+        function boot() {
+          if (reduceMotion.matches) return;
+          if (loaded.length) {
+            start();
+            return;
+          }
+          if (booting) return;
+          booting = true;
+          fetch(ATLAS_BASE + "manifest.json")
+            .then(function (res) {
+              if (!res.ok) throw new Error("manifest");
+              return res.json();
+            })
+            .then(function (data) {
+              manifest = data;
+              cellSize = data.cellSize;
+              grid = data.grid;
+              refillBag();
+              var first = takeNextUnloaded();
+              if (first < 0) throw new Error("empty");
+              return loadAtlas(first);
+            })
+            .then(function (slot) {
+              loaded.push(slot);
+              nextCycleAt = 0;
+              start();
+            })
+            .catch(function () {
+              booting = false;
+            });
         }
 
         function onMotionChange() {
-          if (reduceMotion.matches) stop()
-          else start()
+          if (reduceMotion.matches) stop();
+          else boot();
         }
 
-        window.addEventListener('resize', function () {
-          if (running) resize()
-        })
-        document.addEventListener('visibilitychange', function () {
+        window.addEventListener("resize", function () {
+          if (running) resize();
+        });
+        document.addEventListener("visibilitychange", function () {
           if (document.hidden) {
             if (raf) {
-              cancelAnimationFrame(raf)
-              raf = 0
+              cancelAnimationFrame(raf);
+              raf = 0;
             }
-            running = false
+            running = false;
           } else if (!reduceMotion.matches) {
-            start()
+            boot();
           }
-        })
+        });
         if (reduceMotion.addEventListener) {
-          reduceMotion.addEventListener('change', onMotionChange)
+          reduceMotion.addEventListener("change", onMotionChange);
         } else if (reduceMotion.addListener) {
-          reduceMotion.addListener(onMotionChange)
+          reduceMotion.addListener(onMotionChange);
         }
 
-        if (!reduceMotion.matches) start()
-      })()
+        if (!reduceMotion.matches) boot();
+      })();
     </script>
   </body>
 </html>
