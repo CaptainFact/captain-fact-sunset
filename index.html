@@ -427,7 +427,8 @@
         var SCALE_MAX = 3;
         var CYCLE_MIN = 8000;
         var CYCLE_MAX = 12000;
-        var MAX_LOADED = 2;
+        var MAX_LOADED = 2; // live atlases new drops sample from
+        var MAX_RETIRING = 1;
         var dpr = 1;
         var width = 0;
         var height = 0;
@@ -592,13 +593,24 @@
           return -1;
         }
 
+        function liveSlots() {
+          var live = [];
+          var i;
+          for (i = 0; i < loaded.length; i++) {
+            if (!loaded[i].retiring) live.push(loaded[i]);
+          }
+          return live;
+        }
+
         function assignCell(col) {
-          if (!loaded.length) {
+          var pool = liveSlots();
+          if (!pool.length) pool = loaded;
+          if (!pool.length) {
             col.atlas = -1;
             col.cell = 0;
             return;
           }
-          var slot = loaded[(Math.random() * loaded.length) | 0];
+          var slot = pool[(Math.random() * pool.length) | 0];
           col.atlas = slot.index;
           col.cell = (Math.random() * slot.count) | 0;
         }
@@ -609,6 +621,8 @@
         }
 
         function beginSwitch(col) {
+          var current = slotFor(col.atlas);
+          if (current && current.retiring) return;
           var prevAtlas = col.atlas;
           var prevCell = col.cell;
           assignCell(col);
@@ -673,6 +687,7 @@
                   faded: null,
                   count: meta.count,
                   quality: q,
+                  retiring: false,
                 });
               };
               if (img.decode) {
@@ -690,10 +705,62 @@
           });
         }
 
+        function liveCount() {
+          var n = 0;
+          var i;
+          for (i = 0; i < loaded.length; i++) {
+            if (!loaded[i].retiring) n++;
+          }
+          return n;
+        }
+
+        function hasRetiring() {
+          var i;
+          for (i = 0; i < loaded.length; i++) {
+            if (loaded[i].retiring) return true;
+          }
+          return false;
+        }
+
+        function atlasInUse(index) {
+          var i;
+          var col;
+          for (i = 0; i < columns.length; i++) {
+            col = columns[i];
+            if (!col.active) continue;
+            if (col.atlas === index || col.prevAtlas === index) return true;
+          }
+          return false;
+        }
+
+        function retireOldestLive() {
+          var i;
+          for (i = 0; i < loaded.length; i++) {
+            if (!loaded[i].retiring) {
+              loaded[i].retiring = true;
+              return;
+            }
+          }
+        }
+
+        function maybeDropRetired() {
+          var i;
+          var slot;
+          for (i = loaded.length - 1; i >= 0; i--) {
+            slot = loaded[i];
+            if (!slot.retiring) continue;
+            if (atlasInUse(slot.index)) continue;
+            dropSlot(slot);
+            loaded.splice(i, 1);
+          }
+        }
+
         function maybeCycle(now) {
           if (prefetching || !manifest) return;
           if (manifest.atlases.length <= MAX_LOADED) return;
           if (now < nextCycleAt) return;
+          if (hasRetiring()) return;
+          if (loaded.length >= MAX_LOADED + MAX_RETIRING) return;
           var next = takeNextUnloaded();
           if (next < 0) return;
           prefetching = true;
@@ -708,7 +775,7 @@
                 return;
               }
               loaded.push(slot);
-              while (loaded.length > MAX_LOADED) dropSlot(loaded.shift());
+              while (liveCount() > MAX_LOADED) retireOldestLive();
               prefetching = false;
             })
             .catch(function () {
@@ -878,6 +945,7 @@
             }
           }
 
+          maybeDropRetired();
           if (shouldAdvance) maybeCycle(now);
         }
 
