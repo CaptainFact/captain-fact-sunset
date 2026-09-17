@@ -52,6 +52,18 @@
         --link-hover: hsl(184, 25%, 55%);
         --border: hsl(214.3, 31.8%, 91.4%);
         --radius: 0.5rem;
+
+        /* Background rain — tweak in devtools without editing JS */
+        --matrix-trail-opacity: 0.4;
+        --matrix-picture-opacity: 0.2;
+        --matrix-picture-filter: none;
+        --matrix-image-smoothing: 1;
+
+        /* White scrim over the rain behind the article */
+        --page-background-opacity: 0.88;
+        --page-glow-blur: 88px;
+        --page-glow-spread: 64px;
+        --page-glow-opacity: 0.94;
       }
 
       * {
@@ -93,8 +105,9 @@
         max-width: 40rem;
         margin: 0 auto;
         padding: 3.5rem 1.5rem 5rem;
-        background: rgba(255, 255, 255, 0.88);
-        box-shadow: 0 0 88px 64px rgba(255, 255, 255, 0.94);
+        background: rgba(255, 255, 255, var(--page-background-opacity));
+        box-shadow: 0 0 var(--page-glow-blur) var(--page-glow-spread)
+          rgba(255, 255, 255, var(--page-glow-opacity));
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -357,11 +370,10 @@
         var ATLAS_BASE = "assets/picture-atlases/";
         var TICK_MS = 88;
         var SWITCH_MIN = 1000;
-        var SWITCH_MAX = 1500;
+        var SWITCH_MAX = 2000;
         var FADE_MS = 640;
-        var BASE_ALPHA = 0.1;
-        var SCALE_MIN = 0.8;
-        var SCALE_MAX = 1.2;
+        var SCALE_MIN = 0.75;
+        var SCALE_MAX = 1.5;
         var CYCLE_MIN = 8000;
         var CYCLE_MAX = 12000;
         var MAX_LOADED = 2;
@@ -382,6 +394,24 @@
         var loaded = [];
         var bag = [];
         var nextCycleAt = 0;
+
+        function rainTheme() {
+          var root = getComputedStyle(document.documentElement);
+          function num(name, fallback) {
+            var raw = root.getPropertyValue(name).trim();
+            if (!raw) return fallback;
+            var n = parseFloat(raw);
+            return isNaN(n) ? fallback : n;
+          }
+          var filter = root.getPropertyValue("--matrix-picture-filter").trim();
+          if (!filter || filter === "none") filter = "none";
+          return {
+            trailAlpha: num("--matrix-trail-opacity", 0.11),
+            baseAlpha: num("--matrix-picture-opacity", 0.1),
+            pictureFilter: filter,
+            smooth: num("--matrix-image-smoothing", 1) !== 0,
+          };
+        }
 
         function refillBag() {
           var i;
@@ -452,8 +482,9 @@
           col.fade = 0;
         }
 
-        function drawThumb(img, cell, x, y, size, alpha) {
+        function drawThumb(img, cell, x, y, size, alpha, theme) {
           if (alpha <= 0.002) return;
+          rainCtx.filter = theme.pictureFilter;
           rainCtx.globalAlpha = alpha;
           rainCtx.drawImage(
             img,
@@ -466,6 +497,7 @@
             size,
             size,
           );
+          rainCtx.filter = "none";
         }
 
         function randomSpeed() {
@@ -583,8 +615,13 @@
           if (!running) return;
           raf = requestAnimationFrame(draw);
 
-          rainCtx.fillStyle = "rgba(255, 255, 255, 0.11)";
-          rainCtx.fillRect(0, 0, width, height);
+          var theme = rainTheme();
+          var trail = theme.trailAlpha;
+          if (trail > 0.002) {
+            rainCtx.filter = "none";
+            rainCtx.fillStyle = "rgba(255, 255, 255, " + trail + ")";
+            rainCtx.fillRect(0, 0, width, height);
+          }
 
           var dt = lastFrame ? now - lastFrame : 16;
           lastFrame = now;
@@ -595,7 +632,7 @@
 
           var fall = dt / TICK_MS;
 
-          rainCtx.imageSmoothingEnabled = true;
+          rainCtx.imageSmoothingEnabled = theme.smooth;
 
           for (var i = 0; i < columns.length; i++) {
             var col = columns[i];
@@ -635,12 +672,29 @@
                   x,
                   col.y,
                   size,
-                  BASE_ALPHA * (1 - t),
+                  theme.baseAlpha * (1 - t),
+                  theme,
                 );
               if (slot)
-                drawThumb(slot.img, col.cell, x, col.y, size, BASE_ALPHA * t);
+                drawThumb(
+                  slot.img,
+                  col.cell,
+                  x,
+                  col.y,
+                  size,
+                  theme.baseAlpha * t,
+                  theme,
+                );
             } else if (slot) {
-              drawThumb(slot.img, col.cell, x, col.y, size, BASE_ALPHA);
+              drawThumb(
+                slot.img,
+                col.cell,
+                x,
+                col.y,
+                size,
+                theme.baseAlpha,
+                theme,
+              );
             }
 
             col.y += fontSize * col.speed * fall;
