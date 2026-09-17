@@ -8,35 +8,7 @@
     },
     {
       "src": "atlas-01.png",
-      "count": 1024
-    },
-    {
-      "src": "atlas-02.png",
-      "count": 1024
-    },
-    {
-      "src": "atlas-03.png",
-      "count": 1024
-    },
-    {
-      "src": "atlas-04.png",
-      "count": 1024
-    },
-    {
-      "src": "atlas-05.png",
-      "count": 1024
-    },
-    {
-      "src": "atlas-06.png",
-      "count": 1024
-    },
-    {
-      "src": "atlas-07.png",
-      "count": 1024
-    },
-    {
-      "src": "atlas-08.png",
-      "count": 815
+      "count": 306
     }
   ]
 }
