@@ -621,8 +621,6 @@
         }
 
         function beginSwitch(col) {
-          var current = slotFor(col.atlas);
-          if (current && current.retiring) return;
           var prevAtlas = col.atlas;
           var prevCell = col.cell;
           assignCell(col);
