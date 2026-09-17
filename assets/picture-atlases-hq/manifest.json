@@ -1,0 +1,30 @@
+{
+  "cellSize": 96,
+  "grid": 16,
+  "atlases": [
+    {
+      "src": "atlas-00.png",
+      "count": 256
+    },
+    {
+      "src": "atlas-01.png",
+      "count": 256
+    },
+    {
+      "src": "atlas-02.png",
+      "count": 256
+    },
+    {
+      "src": "atlas-03.png",
+      "count": 256
+    },
+    {
+      "src": "atlas-04.png",
+      "count": 256
+    },
+    {
+      "src": "atlas-05.png",
+      "count": 43
+    }
+  ]
+}

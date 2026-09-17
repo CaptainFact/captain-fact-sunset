@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
-"""Pack user mini-thumbs into sprite atlases for the sunset matrix rain."""
+"""Pack user thumbs into sprite atlases for the sunset matrix rain.
+
+Variants:
+  std  24px mini thumbs → assets/picture-atlases/
+  hq   96px thumbs      → assets/picture-atlases-hq/
+
+Usage:
+  python3 scripts/build-picture-atlases.py
+  python3 scripts/build-picture-atlases.py hq
+"""
 
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import sys
@@ -11,12 +21,23 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-CELL = 24
-GRID = 32
-PER_ATLAS = GRID * GRID
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "assets" / "user-pictures"
-OUT = ROOT / "assets" / "picture-atlases"
+VARIANTS = {
+    "std": {
+        "src": ROOT / "assets" / "user-pictures",
+        "glob": "*_mini_thumb.jpg",
+        "out": ROOT / "assets" / "picture-atlases",
+        "cell": 24,
+        "grid": 32,
+    },
+    "hq": {
+        "src": ROOT / "assets" / "user-pictures-hq",
+        "glob": "*_thumb.jpg",
+        "out": ROOT / "assets" / "picture-atlases-hq",
+        "cell": 96,
+        "grid": 16,
+    },
+}
 
 # Gravatar wavatars / identicons / PNG RoboHash were stored as PNG bytes under
 # a .jpg name. Real photos went through Arc as JPEG.
@@ -30,16 +51,16 @@ _WHITE_CHANNEL = 250
 _ROBOHASH_WHITE_FRAC = 0.35
 
 
-def circle_mask() -> Image.Image:
-    mask = Image.new("L", (CELL, CELL), 0)
-    ImageDraw.Draw(mask).ellipse((0, 0, CELL - 1, CELL - 1), fill=255)
+def circle_mask(cell: int) -> Image.Image:
+    mask = Image.new("L", (cell, cell), 0)
+    ImageDraw.Draw(mask).ellipse((0, 0, cell - 1, cell - 1), fill=255)
     return mask
 
 
-def circle_thumb(path: Path, mask: Image.Image) -> Image.Image:
+def circle_thumb(path: Path, mask: Image.Image, cell: int) -> Image.Image:
     src = Image.open(path).convert("RGBA")
-    if src.size != (CELL, CELL):
-        src = src.resize((CELL, CELL), Image.LANCZOS)
+    if src.size != (cell, cell):
+        src = src.resize((cell, cell), Image.LANCZOS)
     src.putalpha(mask)
     return src
 
@@ -77,10 +98,17 @@ def generated_avatar_reason(path: Path) -> str | None:
     return None
 
 
-def main() -> None:
-    files = sorted(SRC.glob("*_mini_thumb.jpg"))
+def build(variant: str) -> None:
+    cfg = VARIANTS[variant]
+    src: Path = cfg["src"]
+    out: Path = cfg["out"]
+    cell: int = cfg["cell"]
+    grid: int = cfg["grid"]
+    per_atlas = grid * grid
+
+    files = sorted(src.glob(cfg["glob"]))
     if not files:
-        print(f"No thumbs in {SRC}", file=sys.stderr)
+        print(f"No thumbs in {src}", file=sys.stderr)
         sys.exit(1)
 
     skipped: Counter[str] = Counter()
@@ -104,30 +132,43 @@ def main() -> None:
         print("No user pictures left after filtering", file=sys.stderr)
         sys.exit(1)
 
-    OUT.mkdir(parents=True, exist_ok=True)
-    for old in OUT.glob("atlas-*"):
+    out.mkdir(parents=True, exist_ok=True)
+    for old in out.glob("atlas-*"):
         old.unlink()
 
-    mask = circle_mask()
+    mask = circle_mask(cell)
     atlases = []
-    for i in range(0, len(files), PER_ATLAS):
-        chunk = files[i : i + PER_ATLAS]
-        idx = i // PER_ATLAS
+    for i in range(0, len(files), per_atlas):
+        chunk = files[i : i + per_atlas]
+        idx = i // per_atlas
         name = f"atlas-{idx:02d}.png"
-        dest = OUT / name
-        rows = math.ceil(len(chunk) / GRID)
-        sheet = Image.new("RGBA", (GRID * CELL, rows * CELL), (255, 255, 255, 0))
+        dest = out / name
+        rows = math.ceil(len(chunk) / grid)
+        sheet = Image.new("RGBA", (grid * cell, rows * cell), (255, 255, 255, 0))
         for n, path in enumerate(chunk):
-            x = (n % GRID) * CELL
-            y = (n // GRID) * CELL
-            sheet.paste(circle_thumb(path, mask), (x, y))
+            x = (n % grid) * cell
+            y = (n // grid) * cell
+            sheet.paste(circle_thumb(path, mask, cell), (x, y))
         sheet.save(dest, "PNG", optimize=True)
         atlases.append({"src": name, "count": len(chunk)})
         print(f"Wrote {name} ({len(chunk)} cells)")
 
-    manifest = {"cellSize": CELL, "grid": GRID, "atlases": atlases}
-    (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(f"Packed {len(files)} pictures into {len(atlases)} atlases")
+    manifest = {"cellSize": cell, "grid": grid, "atlases": atlases}
+    (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    print(f"Packed {len(files)} pictures into {len(atlases)} {variant} atlases")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "variant",
+        nargs="?",
+        choices=sorted(VARIANTS),
+        default="std",
+        help="std: 24px mini thumbs; hq: 96px thumbs (default: std)",
+    )
+    args = parser.parse_args()
+    build(args.variant)
 
 
 if __name__ == "__main__":
